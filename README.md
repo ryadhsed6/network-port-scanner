@@ -3,59 +3,89 @@
 ## 📌 Overview
 This is a Python-based multi-threaded port scanner that checks for open TCP ports on a target IP address or domain.
 
-It is designed as a cybersecurity learning project to demonstrate basic network reconnaissance and socket programming skills.
+It is designed as a cybersecurity learning project to demonstrate network reconnaissance, socket programming, threading performance, and basic security analysis concepts.
 
 ---
 
 ## ⚙️ Features
 - Scan IP addresses or domain names
-- Custom port range support using CLI arguments
+- Custom port range support via CLI
+- Multi-threaded scanning for high performance
 - Detect open TCP ports
-- Multi-threaded scanning for faster performance
-- Export results to `results.txt`
-- Clean and structured terminal output
+- Basic service detection (SSH, HTTP, HTTPS)
+- Export results to **TXT and JSON formats**
+- Clean CLI output for readability
+
+---
+
+## 📁 Output Files
+After each scan, two files are generated:
+- `results.txt` → Human-readable report
+- `results.json` → Structured data for analysis or automation
 
 ---
 
 ## 🧠 What I learned
-- Networking fundamentals (IP addresses, ports, TCP connections)
+- TCP/IP networking fundamentals
 - Socket programming in Python
-- Multi-threading for performance improvement
-- Command-line argument handling using argparse
-- Error handling and input validation
-- Building CLI-based cybersecurity tools
+- Multi-threading for performance optimization
+- Command-line interface (CLI) development
+- JSON data handling and structured logging
+- Error handling and scanning reliability
+- Building cybersecurity tools from scratch
 
 ---
 
 ## 🚀 How to run
 
-```bash
-python scanner.py -t google.com -p 1-1000
+Basic scan:
 python scanner.py -t 127.0.0.1 -p 1-1000
-python scanner.py -t 192.168.1.1 -p 20-500
-```
+
+Scan router / network device:
+python scanner.py -t 192.168.1.1 -p 1-1000
+
+Faster scan (more threads):
+python scanner.py -t 127.0.0.1 -p 1-1000 -T 200
 
 ---
 
 ## 📊 Example output
+[OPEN] Port 22 (ssh)
+[OPEN] Port 80 (http)
+[OPEN] Port 443 (https)
 
-```
-[OPEN] Port 22
-[OPEN] Port 80
-[OPEN] Port 443
+Scan Completed
+Open Ports: 3
+Saved: results.txt + results.json
 
-Total OPEN ports: 3
-```
+---
+
+## 📄 JSON Output Example
+{
+  "target": "127.0.0.1",
+  "time": "2026-04-15 12:00:00",
+  "open_ports_count": 3,
+  "open_ports": [
+    {
+      "port": 22,
+      "service": "ssh"
+    },
+    {
+      "port": 80,
+      "service": "http"
+    }
+  ]
+}
 
 ---
 
 ## 🛡️ Future Improvements
-- Add service detection (SSH, HTTP, FTP banners)
-- Export results in JSON and CSV formats
-- Improve performance using async scanning
-- Add colored terminal output
-- Add progress bar
-- Add stealth scan modes
+- Banner grabbing (service fingerprinting)
+- Async scanning (even faster performance)
+- Progress bar for scan status
+- Colored terminal output
+- Stealth scan modes
+- Web dashboard (GUI interface)
 
 ---
 
@@ -68,4 +98,4 @@ GitHub: https://github.com/ryadhsed6
 
 ## ⚠️ Disclaimer
 This tool is for educational purposes only.  
-Do not use it on systems you do not own or have permission to test.
+Do not use it on systems you do not own or have explicit permission to test.

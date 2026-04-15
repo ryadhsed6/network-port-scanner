@@ -1,0 +1,23 @@
+{
+    "target": "127.0.0.1",
+    "time": "2026-04-15 16:28:38.236424",
+    "open_ports_count": 4,
+    "open_ports": [
+        {
+            "port": 135,
+            "service": "epmap"
+        },
+        {
+            "port": 445,
+            "service": "microsoft-ds"
+        },
+        {
+            "port": 902,
+            "service": "unknown"
+        },
+        {
+            "port": 912,
+            "service": "unknown"
+        }
+    ]
+}

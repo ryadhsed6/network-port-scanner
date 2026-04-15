@@ -1,75 +1,98 @@
-import argparse
 import socket
-from datetime import datetime
+import argparse
+import json
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
 
-parser = argparse.ArgumentParser(description="Simple Python Port Scanner")
+def scan_port(target, port, timeout=0.5):
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(timeout)
 
-parser.add_argument("-t", "--target", help="Target IP or domain", required=True)
-parser.add_argument("-p", "--ports", help="Port range (default 1-1000)", default="1-1000")
+        result = sock.connect_ex((target, port))
 
-args = parser.parse_args()
+        if result == 0:
+            try:
+                service = socket.getservbyport(port)
+            except:
+                service = "unknown"
 
-target = args.target
-port_range = args.ports
+            print(f"[OPEN] Port {port} ({service})")
+            return {"port": port, "service": service}
 
-start_port, end_port = map(int, port_range.split("-"))
+        sock.close()
 
-print("-" * 50)
-print(f"Scanning target: {target}")
-print(f"\nTime started: {datetime.now()}")
-print("-" * 50)
+    except:
+        pass
 
-try:
-    target_ip = socket.gethostbyname(target)
-except socket.gaierror:
-    print("Error: Unable to resolve host.")
-    exit()
-
-print(f"IP Address: {target_ip}")
-print("-" * 50)
-
-# Function to scan a single port
-def scan_port(port):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.settimeout(0.3)
-
-    result = sock.connect_ex((target_ip, port))
-    sock.close()
-
-    if result == 0:
-        return port
     return None
 
-open_ports = []
 
-with ThreadPoolExecutor(max_workers=200) as executor:
-    results = executor.map(scan_port, range(start_port, end_port + 1))
+def scan_ports(target, ports, threads=100):
+    print("\n" + "-" * 50)
+    print(f"Scanning Target: {target}")
+    print(f"Time: {datetime.now()}")
+    print("-" * 50 + "\n")
 
-    for port in results:
-        if port is not None:
-            open_ports.append(port)
+    open_ports = []
 
-print("\nRESULTS:")
-print("-" * 30)
+    with ThreadPoolExecutor(max_workers=threads) as executor:
+        results = executor.map(lambda p: scan_port(target, p), ports)
 
-# Saves the results in file named results.txt
-with open("results.txt", "w") as file:
-    file.write(f"Scan results for {target} ({target_ip})\n")
-    file.write("-" * 40 + "\n")
+        for r in results:
+            if r:
+                open_ports.append(r)
 
-    for port in open_ports:
-        file.write(f"OPEN PORT: {port}\n")
+    # -------------------------
+    # TEXT REPORT
+    # -------------------------
+    with open("results.txt", "w") as f:
+        f.write(f"Scan Report\n")
+        f.write(f"Target: {target}\n")
+        f.write(f"Time: {datetime.now()}\n\n")
 
-    file.write("-" * 40 + "\n")
-    file.write(f"Total OPEN ports: {len(open_ports)}\n")
+        for p in open_ports:
+            f.write(f"OPEN PORT: {p['port']} ({p['service']})\n")
 
-for port in open_ports:
-    print(f"[OPEN] Port {port}")
+        f.write(f"\nTotal: {len(open_ports)} open ports\n")
 
-print("-" * 30)
-print(f"Total OPEN ports: {len(open_ports)}")
+    # -------------------------
+    # JSON EXPORT (NEW)
+    # -------------------------
+    data = {
+        "target": target,
+        "time": str(datetime.now()),
+        "open_ports_count": len(open_ports),
+        "open_ports": open_ports
+    }
 
-print("-" * 50)
-print("Scan completed.")
-print("-" * 50)
+    with open("results.json", "w") as f:
+        json.dump(data, f, indent=4)
+
+    print("\nScan Completed")
+    print(f"Open Ports: {len(open_ports)}")
+    print("Saved: results.txt + results.json")
+
+
+def parse_ports(port_range):
+    if "-" in port_range:
+        start, end = map(int, port_range.split("-"))
+        return range(start, end + 1)
+    return [int(port_range)]
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-t", "--target", required=True)
+    parser.add_argument("-p", "--ports", required=True)
+    parser.add_argument("-T", "--threads", type=int, default=100)
+
+    args = parser.parse_args()
+
+    ports = parse_ports(args.ports)
+
+    scan_ports(args.target, ports, args.threads)
+
+
+if __name__ == "__main__":
+    main()
