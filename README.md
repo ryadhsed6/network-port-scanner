@@ -31,3 +31,17 @@ It is designed as a cybersecurity learning project to demonstrate basic network 
 
 ```bash
 python scanner.py
+
+
+---
+
+## 🛡️ Future Improvements
+- Add port range customization from user input
+- Add service detection (banner grabbing)
+- Add export results to file (CSV or JSON)
+- Improve scanning speed with async methods
+
+---
+
+## 👤 Author
+Built by Ryadh Seddiki as a cybersecurity learning project.
