@@ -1,47 +1,34 @@
 # 🔐 Network Port Scanner (Python)
 
 ## 📌 Overview
-This is a simple Python-based port scanner that checks for open TCP ports on a target IP address or domain.
+This is a Python-based multi-threaded port scanner that checks for open TCP ports on a target IP address or domain.
 
-It is designed as a cybersecurity learning project to demonstrate basic network reconnaissance skills.
+It is designed as a cybersecurity learning project to demonstrate basic network reconnaissance and socket programming skills.
 
 ---
 
 ## ⚙️ Features
 - Scan IP addresses or domain names
-- Detect open TCP ports (1–1000)
-- Multi-threaded scanning for faster results
-- Clean terminal output
+- Custom port range support using CLI arguments
+- Detect open TCP ports
+- Multi-threaded scanning for faster performance
+- Export results to `results.txt`
+- Clean and structured terminal output
 
 ---
 
 ## 🧠 What I learned
-- Basics of networking (IP, ports, TCP connections)
+- Networking fundamentals (IP addresses, ports, TCP connections)
 - Socket programming in Python
-- Threading for performance improvement
+- Multi-threading for performance improvement
+- Command-line argument handling using argparse
 - Error handling and input validation
+- Building CLI-based cybersecurity tools
 
 ---
 
 ## 🚀 How to run
 
-1. Install Python (if not installed)
-2. Open terminal in project folder
-3. Run:
-
+### Basic usage:
 ```bash
-python scanner.py
-
-
----
-
-## 🛡️ Future Improvements
-- Add port range customization from user input
-- Add service detection (banner grabbing)
-- Add export results to file (CSV or JSON)
-- Improve scanning speed with async methods
-
----
-
-## 👤 Author
-Built by Ryadh Seddiki as a cybersecurity learning project.
+python scanner.py -t google.com -p 1-1000
