@@ -1,10 +1,6 @@
-Scan Report
-Target: 127.0.0.1
-Time: 2026-04-15 16:28:38.236424
+SCAN REPORT
+Target: 192.168.1.1
+Time: 2026-04-15 16:32:43.277237
 
-OPEN PORT: 135 (epmap)
-OPEN PORT: 445 (microsoft-ds)
-OPEN PORT: 902 (unknown)
-OPEN PORT: 912 (unknown)
 
-Total: 4 open ports
+Total Open Ports: 0
