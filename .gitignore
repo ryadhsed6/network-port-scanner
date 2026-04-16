@@ -1,0 +1,11 @@
+# Ignore scan output files
+scan_*.txt
+scan_*.json
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore virtual environments (if you ever use them)
+venv/
+.env

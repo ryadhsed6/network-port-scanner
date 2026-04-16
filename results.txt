@@ -1,6 +1,0 @@
-SCAN REPORT
-Target: 192.168.1.1
-Time: 2026-04-15 16:32:43.277237
-
-
-Total Open Ports: 0
