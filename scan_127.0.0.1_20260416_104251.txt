@@ -1,0 +1,13 @@
+NETWORK PORT SCAN REPORT
+============================================================
+Target: 127.0.0.1
+Resolved IP: 127.0.0.1
+Scan Started: 2026-04-16 10:42:51
+Scan Finished: 2026-04-16 10:42:51
+Duration: 0.21 seconds
+Ports Scanned: 2
+Threads: 20
+Timeout: 0.2 seconds
+Open Ports Found: 0
+
+No open ports were detected in the selected range.
